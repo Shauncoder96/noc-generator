@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Car Deposit Confirmation Generator</title>
+
+<style>
+body {
+  font-family: Arial, Tahoma;
+  margin: 30px;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 6px;
+  margin-bottom: 10px;
+}
+
+button {
+  padding: 10px 16px;
+  margin-top: 10px;
+}
+
+.section {
+  margin-bottom: 25px;
+}
+
+.output {
+  display: none;
+  margin-top: 30px;
+  border: 2px solid black;
+  padding: 20px;
+}
+
+.arabic {
+  direction: rtl;
+  text-align: right;
+  font-family: Tahoma;
+}
+
+h2 {
+  text-align: center;
+}
+</style>
+</head>
+
+<body>
+
+<h2>Bilingual Deposit Confirmation Form</h2>
+
+<div class="section">
+
+<label>Company Name / اسم الشركة</label>
+<input id="company">
+
+<label>City & Country / المدينة والدولة</label>
+<input id="city">
+
+<label>Date / التاريخ</label>
+<input type="date" id="date">
+
+<label>Customer Name / اسم العميل</label>
+<input id="customer">
+
+<label>QID / Passport / رقم البطاقة</label>
+<input id="qid">
+
+<label>Phone / الهاتف</label>
+<input id="phone">
+
+<label>Car Make & Model / الصنع والطراز</label>
+<input id="model">
+
+<label>Model Year / سنة الموديل</label>
+<input id="year">
+
+<label>Order Number / رقم الطلب</label>
+<input id="order">
+
+<label>Exterior Color / اللون الخارجي</label>
+<input id="extColor">
+
+<label>Interior Color / اللون الداخلي</label>
+<input id="intColor">
+
+<label>Car Value / قيمة السيارة</label>
+<input id="carValue">
+
+<label>Deposit Amount / مبلغ العربون</label>
+<input id="deposit">
+
+<label>Deposit in Words (EN) / كتابة المبلغ بالانجليزي</label>
+<input id="depositWordsEn">
+
+<label>Deposit in Words (AR) / كتابة المبلغ بالعربي</label>
+<input id="depositWordsAr">
+
+<label>Masked Card Number / رقم البطاقة</label>
+<input id="card">
+
+<button onclick="generateLetter()">Generate Letters</button>
+
+<button onclick="window.print()">Print / Save PDF</button>
+
+</div>
+
+<div class="output" id="output">
+
+<!-- ENGLISH -->
+
+<h2>Deposit Confirmation – Credit Card Payment</h2>
+
+<p>
+<b>To:</b><br>
+The Manager<br>
+<span id="oCompany"></span><br>
+<span id="oCity"></span>
+</p>
+
+<p>Date: <b id="oDate"></b></p>
+
+<p>
+<b>Subject:</b> Credit Card Deposit Payment Confirmation for
+<span id="oModel"></span>
+</p>
+
+<p>
+Dear Sir,<br><br>
+
+I, <b id="oCustomer"></b>, holder of QID No.
+<b id="oQid"></b>, hereby confirm that I have agreed to pay a deposit amount of
+<b id="oDeposit"></b> QAR
+(<b id="oDepositWordsEn"></b>) using my credit/debit card toward the purchase of the below-mentioned vehicle from
+<b id="oCompany2"></b>.
+</p>
+
+<p>
+I fully acknowledge that the above deposit is <b>non-refundable</b>.
+</p>
+
+<h4>Vehicle Details:</h4>
+<ul>
+<li>Make & Model: <span id="oModel2"></span></li>
+<li>Year: <span id="oYear"></span></li>
+<li>Order No.: <span id="oOrder"></span></li>
+<li>Exterior Color: <span id="oExt"></span></li>
+<li>Interior Color: <span id="oInt"></span></li>
+</ul>
+
+<p>
+Car Value: <b id="oCarValue"></b> QAR
+</p>
+
+<h4>Card Details:</h4>
+<p>
+Card Number: <b id="oCard"></b>
+</p>
+
+<p>
+Phone No.: <b id="oPhone"></b>
+</p>
+
+<p>
+<b>Total Paid:</b> <span id="oDeposit2"></span> QAR
+</p>
+
+<p>
+Yours truly,<br><br>
+_________________________<br>
+Signature<br>
+<span id="oCustomer2"></span>
+</p>
+
+<hr>
+
+<!-- ARABIC -->
+
+<div class="arabic">
+
+<h2>إقرار – تأكيد دفع عربون بواسطة بطاقة إلكترونية</h2>
+
+<p>
+السيارة: <b id="aModel"></b>
+</p>
+
+<p>
+أنا السيد/السيدة: <b id="aCustomer"></b><br>
+رقم البطاقة الشخصية: <b id="aQid"></b>
+</p>
+
+<p>
+أقر بموجب هذا أنني وافقت على دفع عربون قدره
+<b id="aDeposit"></b> ريال قطري
+( <b id="aDepositWordsAr"></b> )
+باستخدام بطاقتي مقابل شراء السيارة المذكورة أدناه من شركة
+<b id="aCompany"></b>.
+</p>
+
+<h4>تفاصيل السيارة:</h4>
+<ul>
+<li>الصنع والطراز: <span id="aModel2"></span></li>
+<li>سنة الموديل: <span id="aYear"></span></li>
+<li>رقم الطلب: <span id="aOrder"></span></li>
+<li>اللون الخارجي: <span id="aExt"></span></li>
+<li>اللون الداخلي: <span id="aInt"></span></li>
+</ul>
+
+<p>
+قيمة السيارة: <b id="aCarValue"></b> ريال قطري
+</p>
+
+<h4>تفاصيل البطاقة:</h4>
+<p>
+رقم البطاقة: <b id="aCard"></b>
+</p>
+
+<p>
+أقر بعلمي التام بأن العربون المدفوع <b>غير قابل للاسترداد</b>.
+</p>
+
+<p>
+رقم الهاتف: <b id="aPhone"></b>
+</p>
+
+<p>
+وتفضلوا بقبول فائق الاحترام،<br><br>
+
+_________________________<br>
+التوقيع<br>
+<span id="aCustomer2"></span><br>
+التاريخ: <span id="aDate"></span>
+</p>
+
+</div>
+
+</div>
+
+<script>
+function generateLetter() {
+
+const v = id => document.getElementById(id).value;
+
+const data = {
+company: v("company"),
+city: v("city"),
+date: v("date"),
+customer: v("customer"),
+qid: v("qid"),
+phone: v("phone"),
+model: v("model"),
+year: v("year"),
+order: v("order"),
+ext: v("extColor"),
+int: v("intColor"),
+carValue: v("carValue"),
+deposit: v("deposit"),
+depositEn: v("depositWordsEn"),
+depositAr: v("depositWordsAr"),
+card: v("card")
+};
+
+const map = {
+oCompany: data.company,
+oCompany2: data.company,
+oCity: data.city,
+oDate: data.date,
+oCustomer: data.customer,
+oCustomer2: data.customer,
+oQid: data.qid,
+oModel: data.model,
+oModel2: data.model,
+oYear: data.year,
+oOrder: data.order,
+oExt: data.ext,
+oInt: data.int,
+oCarValue: data.carValue,
+oDeposit: data.deposit,
+oDeposit2: data.deposit,
+oDepositWordsEn: data.depositEn,
+oCard: data.card,
+oPhone: data.phone,
+
+aCompany: data.company,
+aDate: data.date,
+aCustomer: data.customer,
+aCustomer2: data.customer,
+aQid: data.qid,
+aModel: data.model,
+aModel2: data.model,
+aYear: data.year,
+aOrder: data.order,
+aExt: data.ext,
+aInt: data.int,
+aCarValue: data.carValue,
+aDeposit: data.deposit,
+aDepositWordsAr: data.depositAr,
+aCard: data.card,
+aPhone: data.phone
+};
+
+for (let id in map) {
+document.getElementById(id).innerText = map[id];
+}
+
+document.getElementById("output").style.display = "block";
+}
+</script>
+
+</body>
+</html>
