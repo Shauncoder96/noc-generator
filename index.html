@@ -51,55 +51,54 @@ h2 {
 <div class="section">
 
 <label>Company Name / اسم الشركة</label>
-<input id="company">
+<input id="company" oninput="syncArabic('company','aCompany','oCompany2')">
 
 <label>City & Country / المدينة والدولة</label>
-<input id="city">
+<input id="city" oninput="syncArabic('city','oCity')">
 
 <label>Date / التاريخ</label>
-<input type="date" id="date">
+<input type="date" id="date" oninput="syncArabic('date','oDate','aDate')">
 
 <label>Customer Name / اسم العميل</label>
-<input id="customer">
+<input id="customer" oninput="syncArabic('customer','aCustomer','aCustomer2','oCustomer','oCustomer2')">
 
 <label>QID / Passport / رقم البطاقة</label>
-<input id="qid">
+<input id="qid" oninput="syncArabic('qid','aQid','oQid')">
 
 <label>Phone / الهاتف</label>
-<input id="phone">
+<input id="phone" oninput="syncArabic('phone','aPhone','oPhone')">
 
 <label>Car Make & Model / الصنع والطراز</label>
-<input id="model">
+<input id="model" oninput="syncArabic('model','aModel','aModel2','oModel','oModel2')">
 
 <label>Model Year / سنة الموديل</label>
-<input id="year">
+<input id="year" oninput="syncArabic('year','aYear','oYear')">
 
 <label>Order Number / رقم الطلب</label>
-<input id="order">
+<input id="order" oninput="syncArabic('order','aOrder','oOrder')">
 
 <label>Exterior Color / اللون الخارجي</label>
-<input id="extColor">
+<input id="extColor" oninput="syncArabic('extColor','aExt','oExt')">
 
 <label>Interior Color / اللون الداخلي</label>
-<input id="intColor">
+<input id="intColor" oninput="syncArabic('intColor','aInt','oInt')">
 
 <label>Car Value / قيمة السيارة</label>
-<input id="carValue">
+<input id="carValue" oninput="syncArabic('carValue','aCarValue','oCarValue')">
 
 <label>Deposit Amount / مبلغ العربون</label>
-<input id="deposit">
+<input id="deposit" oninput="syncArabic('deposit','aDeposit','oDeposit','oDeposit2')">
 
 <label>Deposit in Words (EN) / كتابة المبلغ بالانجليزي</label>
-<input id="depositWordsEn">
+<input id="depositWordsEn" oninput="syncArabic('depositWordsEn','oDepositWordsEn')">
 
 <label>Deposit in Words (AR) / كتابة المبلغ بالعربي</label>
-<input id="depositWordsAr">
+<input id="depositWordsAr" oninput="syncArabic('depositWordsAr','aDepositWordsAr')">
 
 <label>Masked Card Number / رقم البطاقة</label>
-<input id="card">
+<input id="card" oninput="syncArabic('card','aCard','oCard')">
 
 <button onclick="generateLetter()">Generate Letters</button>
-
 <button onclick="window.print()">Print / Save PDF</button>
 
 </div>
@@ -107,7 +106,6 @@ h2 {
 <div class="output" id="output">
 
 <!-- ENGLISH -->
-
 <h2>Deposit Confirmation – Credit Card Payment</h2>
 
 <p>
@@ -174,7 +172,6 @@ Signature<br>
 <hr>
 
 <!-- ARABIC -->
-
 <div class="arabic">
 
 <h2>إقرار – تأكيد دفع عربون بواسطة بطاقة إلكترونية</h2>
@@ -236,73 +233,17 @@ _________________________<br>
 </div>
 
 <script>
-function generateLetter() {
-
-const v = id => document.getElementById(id).value;
-
-const data = {
-company: v("company"),
-city: v("city"),
-date: v("date"),
-customer: v("customer"),
-qid: v("qid"),
-phone: v("phone"),
-model: v("model"),
-year: v("year"),
-order: v("order"),
-ext: v("extColor"),
-int: v("intColor"),
-carValue: v("carValue"),
-deposit: v("deposit"),
-depositEn: v("depositWordsEn"),
-depositAr: v("depositWordsAr"),
-card: v("card")
-};
-
-const map = {
-oCompany: data.company,
-oCompany2: data.company,
-oCity: data.city,
-oDate: data.date,
-oCustomer: data.customer,
-oCustomer2: data.customer,
-oQid: data.qid,
-oModel: data.model,
-oModel2: data.model,
-oYear: data.year,
-oOrder: data.order,
-oExt: data.ext,
-oInt: data.int,
-oCarValue: data.carValue,
-oDeposit: data.deposit,
-oDeposit2: data.deposit,
-oDepositWordsEn: data.depositEn,
-oCard: data.card,
-oPhone: data.phone,
-
-aCompany: data.company,
-aDate: data.date,
-aCustomer: data.customer,
-aCustomer2: data.customer,
-aQid: data.qid,
-aModel: data.model,
-aModel2: data.model,
-aYear: data.year,
-aOrder: data.order,
-aExt: data.ext,
-aInt: data.int,
-aCarValue: data.carValue,
-aDeposit: data.deposit,
-aDepositWordsAr: data.depositAr,
-aCard: data.card,
-aPhone: data.phone
-};
-
-for (let id in map) {
-document.getElementById(id).innerText = map[id];
+// Sync English input to Arabic automatically
+function syncArabic(sourceId, ...targetIds) {
+  const value = document.getElementById(sourceId).value;
+  targetIds.forEach(id => {
+    document.getElementById(id).innerText = value;
+  });
 }
 
-document.getElementById("output").style.display = "block";
+// Generate letter (shows output)
+function generateLetter() {
+  document.getElementById("output").style.display = "block";
 }
 </script>
 
